@@ -19,6 +19,8 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -43,6 +45,9 @@
     </Reference>
     <Reference Include="Common.Logging.NLog31">
       <HintPath>..\packages\Common.Logging.NLog31.2.3.1\lib\net40\Common.Logging.NLog31.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentValidation">
+      <HintPath>..\packages\FluentValidation.5.5.0.0\lib\Net40\FluentValidation.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MongoDB.Bson">
@@ -107,16 +112,32 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\UserModule.cs" />
+    <Compile Include="Infrastructure\Bootstrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Infrastructure\" />
     <Folder Include="Site\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Todoy.Dto\Todoy.Dto.csproj">
       <Project>{2a82e697-1e78-466a-b912-c79e2d5486fd}</Project>
       <Name>Todoy.Dto</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Todoy.Features.Users.Data\Todoy.Features.Users.Data.csproj">
+      <Project>{979b05e0-a8df-46d7-b63d-ea7f89a10d75}</Project>
+      <Name>Todoy.Features.Users.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Todoy.Features.Users.Dto\Todoy.Features.Users.Dto.csproj">
+      <Project>{9e029765-191b-4a57-900e-d522da9d20ca}</Project>
+      <Name>Todoy.Features.Users.Dto</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Todoy.Features.Users.Models\Todoy.Features.Users.Models.csproj">
+      <Project>{ddbc6d5b-fd21-4884-9bab-3973b273497d}</Project>
+      <Name>Todoy.Features.Users.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Todoy.Features.Users\Todoy.Features.Users.csproj">
+      <Project>{1a4b2662-a7d6-4187-b9b2-5b394e97d6e3}</Project>
+      <Name>Todoy.Features.Users</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
@@ -144,6 +165,13 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

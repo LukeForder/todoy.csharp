@@ -28,7 +28,12 @@ namespace Todoy.Features.Users.Impl
         public async Task<User> RegisterUserAsync(Dto.RegistrationRequest registrationRequest)
         {
             // enforce valid registrations
-            _registrationRequestValidator.ValidateAndThrow(registrationRequest);
+             
+            var validationResult = _registrationRequestValidator.Validate(registrationRequest);
+            if (!validationResult.IsValid)
+            {
+                throw new ValidationException(validationResult.Errors);
+            }
 
             string salt = PasswordOperations.GenerateSalt();
 

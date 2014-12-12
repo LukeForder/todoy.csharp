@@ -5,40 +5,74 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Nancy.ModelBinding;
+using Todoy.Features.Users;
+using Todoy.Features.Users.Dto;
+using Todoy.Features.Users.Models;
 
 namespace Todoy.Web.Api
 {
     public class UserModule : NancyModule
     {
-        public UserModule()
+        public UserModule(
+            IUserManager userManager)
         {
             ILog log = LogManager.GetCurrentClassLogger();
 
             Post["api/register", true] =
                 async (args, ct) =>
                 {
-                    //try
-                    //{
-                    //    Dto.RegisterDto registrationMessage = this.Bind<Dto.RegisterDto>();
-                    //}
-                    //catch  (Nancy.ModelBinding.ModelBindingException exception)
-                    //{
-                    //    // TODO: log the exception details
+                    try
+                    {
+                        var registrationRequest = this.Bind<RegistrationRequest>();
 
-                    //    return
-                    //        Negotiate
-                    //        .WithStatusCode(HttpStatusCode.BadRequest)
-                    //        .WithModel(
-                    //            new Dto.ErrorDto
-                    //            {
-                    //                Errors = new string[] { "Your registration details contained bad data :?" }
-                    //            });
+                        if (registrationRequest == null)
+                        {
+                            return CreateBadResponse("Your registration details contained bad data :?");
+                        }
 
-                    //}
+                        User user = await userManager.RegisterUserAsync(registrationRequest);
 
-                    return null;
-                    
+                        return user;
+                    }
+                    catch (FluentValidation.ValidationException validationException)
+                    {
+                        return CreateBadResponse(
+                            validationException
+                            .Errors
+                            .Select(x => x.ErrorMessage)
+                            .ToArray());
+                    }
+                    catch (Nancy.ModelBinding.ModelBindingException exception)
+                    {
+                        // TODO: log the exception details
+
+                        return CreateBadResponse("Your registration details contained bad data :?");
+                    }
                 };
+        }
+       
+        private dynamic CreateBadResponse(string message)
+        {
+            return
+                Negotiate
+                    .WithStatusCode(HttpStatusCode.BadRequest)
+                    .WithModel(
+                        new Dto.ErrorDto
+                        {
+                            Errors = new string[] { message }
+                        });
+        }
+
+        private dynamic CreateBadResponse(IEnumerable<string> messages)
+        {
+            return
+                Negotiate
+                    .WithStatusCode(HttpStatusCode.BadRequest)
+                    .WithModel(
+                        new Dto.ErrorDto
+                        {
+                            Errors = messages 
+                        });
         }
     }
 }

@@ -2,6 +2,7 @@
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,11 +25,20 @@ namespace Todoy.Features.Users.Data
 
         public User Add(User user)
         {
-            _userValidator.ValidateAndThrow(user);
+            _userValidator.Validate(user);
+            try
+            {
+                var result = _userCollection.Insert(user);
 
-            var result = _userCollection.Insert(user);
+                return user;
+            }
+            catch(MongoDuplicateKeyException duplicateKeyException)
+            {
+                // TODO: get the duplicate key property ;
 
-            return user;
+                // HACK: shortcut
+                throw new DuplicateEmailAddressException(user.EmailAddress);
+            }
         }
     }
 }
