@@ -1,7 +1,10 @@
 ﻿using FluentValidation;
+using FluentValidation.Results;
 using MongoDB.Driver;
+using MongoDB.Driver.Builders;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,9 +29,38 @@ namespace Todoy.Features.Users.Data
         {
             _userValidator.ValidateAndThrow(user);
 
-            var result = _userCollection.Insert(user);
+            try
+            {
+                var result = _userCollection.Insert(user);
+
+                return user;
+            }
+            catch(MongoDuplicateKeyException duplicateKeyException)
+            {
+                // TODO: get the duplicate key property ;
+
+                // HACK: shortcut
+                throw new DuplicateEmailAddressException(user.EmailAddress);
+            }
+        }
+
+        public User Get(string emailAddress)
+        {
+            IMongoQuery query = Query<User>.EQ(x => x.EmailAddress, emailAddress);
+
+            User user = _userCollection.FindOne(query);
 
             return user;
+        }
+
+
+        public User Update(User user)
+        {
+             _userValidator.ValidateAndThrow(user);
+
+             _userCollection.Save(user);
+
+             return user;
         }
     }
 }

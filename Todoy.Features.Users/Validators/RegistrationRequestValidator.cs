@@ -16,9 +16,15 @@ namespace Todoy.Features.Users.Validators
                 .NotEmpty()
                 .EmailAddress();
 
+            RuleFor(x => x.PasswordConfirmation)
+                .NotEmpty();
+
             RuleFor(x => x.Password)
                 .NotEmpty()
-                .Equal(x => x.PasswordConfirmation);
+                .Equal(x => x.PasswordConfirmation)
+                .WithMessage("'Password' should match confirmation.");
+
+
 
         }
     }

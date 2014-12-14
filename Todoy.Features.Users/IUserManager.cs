@@ -10,5 +10,7 @@ namespace Todoy.Features.Users
     public interface IUserManager
     {
         Task<User> RegisterUserAsync(Dto.RegistrationRequest registrationRequest);
+
+        Task<User> ValidateCredentialsAsync(LoginCredentialWithIPAddress credentials);
     }
 }

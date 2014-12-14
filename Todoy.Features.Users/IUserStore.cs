@@ -11,5 +11,9 @@ namespace Todoy.Features.Users
     {
         User Add(User user);
 
+        User Get(string emailAddress);
+
+        User Update(User user);
+
     }
 }

@@ -11,6 +11,8 @@ namespace Todoy.Features.Users.Models
         public User()
         {
             Id = Guid.NewGuid();
+
+            LoginAttempts = new List<LoginAttempt>();
         }
 
         public Guid Id
