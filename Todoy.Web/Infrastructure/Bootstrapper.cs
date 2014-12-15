@@ -15,6 +15,8 @@ using Todoy.Features.Users;
 using Todoy.Features.Users.Dto;
 using Todoy.Features.Users.Data.Indexing;
 using Nancy.Authentication.Token;
+using SquishIt.Framework;
+using Nancy.Conventions;
 
 namespace Todoy.Web.Infrastructure
 {
@@ -88,5 +90,67 @@ namespace Todoy.Web.Infrastructure
             TokenAuthentication.Enable(pipelines, new TokenAuthenticationConfiguration(container.Get<ITokenizer>()));
         }
 
+        protected override void ApplicationStartup(IKernel container, Nancy.Bootstrapper.IPipelines pipelines)
+        {
+            base.ApplicationStartup(container, pipelines);
+
+            Bundle
+                .JavaScript()
+                .Add("~/Scripts/jquery-1.9.0.js")
+                .Add("~/Scripts/angular.js")
+                .Add("~/Scripts/angular-route.js")
+                .WithMinifier<SquishIt.Framework.Minifiers.JavaScript.MsMinifier>()
+                .ForceRelease()
+                .AsCached("all", "~/js/all");
+
+            Bundle
+                .Css()
+                .Add("~/Content/font-awesome.css")
+                .Add("~/Less/bootstrap.less")
+                .ProcessImports()
+                .Add("~/Less/bootswatch.less")
+                .Add("~/Less/custom.less")
+                .WithMinifier<SquishIt.Framework.Minifiers.CSS.YuiMinifier>()
+                .ForceRelease()
+                .AsCached("all", "~/css/all");
+
+            Bundle
+                .JavaScript()
+                .AddDirectory("~/JsApp/authentication")
+                .AddDirectory("~/JsApp/todo")
+                .Add("~/JsApp/module.js")
+                .ForceRelease()
+                .AsCached("app", "~/js/app");
+
+        }
+
+        protected override void ConfigureConventions(Nancy.Conventions.NancyConventions nancyConventions)
+        {
+            base.ConfigureConventions(nancyConventions);
+
+            nancyConventions
+                .StaticContentsConventions
+                .Add(StaticContentConventionBuilder.AddDirectory("Scripts"));
+
+            nancyConventions
+                .StaticContentsConventions
+                .Add(StaticContentConventionBuilder.AddDirectory("Less"));
+
+            nancyConventions
+               .StaticContentsConventions
+               .Add(StaticContentConventionBuilder.AddDirectory("fonts"));
+
+            nancyConventions
+                .StaticContentsConventions
+                .Add(StaticContentConventionBuilder.AddDirectory("JsApp/authentication/partials"));
+
+            nancyConventions
+               .StaticContentsConventions
+               .Add(StaticContentConventionBuilder.AddDirectory("JsApp/todo/partials"));
+
+            nancyConventions
+               .StaticContentsConventions
+               .Add(StaticContentConventionBuilder.AddDirectory("fonts"));
+        }
     }
 }

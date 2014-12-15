@@ -1,0 +1,41 @@
+﻿<div class="alert alert-danger"
+     data-ng-show="ctrl.flash && ctrl.flash.length > 0">
+    <h3>Whoops!</h3>
+    <ul class="list-unstyled">
+        <li data-ng-repeat="message in ctrl.flash">
+            {{message}}
+        </li>
+    </ul>
+</div>
+<div class="panel panel-default col-lg-6 col-md-6" >
+    <div class="panel-body">
+        <form role="form"
+              name="loginForm">
+            <fieldset>
+                <legend>Sign in</legend>
+                <div class="form-group">
+                    <input class="form-control"
+                           name="emailAddress"
+                           placeholder="email address"
+                           data-ng-model="ctrl.emailAddress"
+                           required />
+                </div>
+                <div class="form-group">
+                    <input class="form-control"
+                           name="password"
+                           type="password"
+                           placeholder="password"
+                           data-ng-model="ctrl.password"
+                           required />
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary"
+                            data-ng-click="ctrl.attemptSignIn()"
+                            data-ng-disabled="!(loginForm.emailAddress.$valid && loginForm.password.$valid)">
+                        sign in
+                    </button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
