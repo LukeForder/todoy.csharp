@@ -1,7 +1,7 @@
 ﻿angular.module(
     'todoy',
-    ['ngRoute']).
-constant('siteUrl', "http://localhost:56749/JsApp").
+    ['ngRoute', 'validation.match']).
+constant('siteUrl', "http://localhost:56749").
 constant('user', null).
 config([
     '$routeProvider',
@@ -13,7 +13,7 @@ config([
                 {
                     controller: 'toDoListController',
                     controllerAs: 'ctrl',
-                    templateUrl: siteUrl + '/todo/partials/todoList.html'
+                    templateUrl: siteUrl + '/JsApp/todo/partials/todoList.html'
                 }
             ).
             when(
@@ -21,7 +21,7 @@ config([
                 {
                     controller: 'authenticationController',
                     controllerAs: 'ctrl',
-                    templateUrl: siteUrl + '/authentication/partials/login.html'
+                    templateUrl: siteUrl + '/JsApp/authentication/partials/login.html'
                 }).
             otherwise(
                 {
@@ -54,6 +54,7 @@ service(
     [
         '$http',
         '$q',
+        'siteUrl',
          todoy.authentication.services.AuthenticationService
     ]).
 controller(
@@ -67,6 +68,12 @@ controller(
     'toDoListController',
     [
         todoy.toDo.controllers.ToDoListController
+    ]).
+controller(
+    'registrationController',
+    [
+        'authenticationService',
+        todoy.authentication.controllers.RegistrationController
     ]).
 directive(
     'registrationForm',

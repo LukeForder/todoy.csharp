@@ -135,7 +135,11 @@
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="JsApp\authentication\controllers\AuthenticationController.js" />
+    <Content Include="JsApp\authentication\controllers\RegistrationController.js" />
+    <Content Include="JsApp\authentication\directives\RegistrationForm.js" />
+    <Content Include="JsApp\authentication\models\RegistrationDetails.js" />
     <Content Include="JsApp\authentication\partials\login.html" />
+    <Content Include="JsApp\authentication\partials\registration.html" />
     <Content Include="JsApp\authentication\services\AuthenticationService.js" />
     <Content Include="JsApp\module.js" />
     <Content Include="JsApp\todo\controllers\ToDoListController.js" />
@@ -150,6 +154,8 @@
     <Content Include="Scripts\angular-cookies.js" />
     <Content Include="Scripts\angular-cookies.min.js" />
     <Content Include="Scripts\angular-csp.css" />
+    <Content Include="Scripts\angular-input-match.js" />
+    <Content Include="Scripts\angular-input-match.min.js" />
     <Content Include="Scripts\angular-loader.js" />
     <Content Include="Scripts\angular-loader.min.js" />
     <Content Include="Scripts\angular-messages.js" />
@@ -1035,9 +1041,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site\SiteModule.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="JsApp\authentication\directives\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Todoy.Dto\Todoy.Dto.csproj">
       <Project>{2a82e697-1e78-466a-b912-c79e2d5486fd}</Project>

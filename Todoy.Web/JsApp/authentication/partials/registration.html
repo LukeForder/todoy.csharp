@@ -1,0 +1,45 @@
+﻿<div class="panel panel-default">
+    <div class="panel-body">
+        <h2>
+            Not yet a user?
+        </h2>
+        <form role="form"
+                name="registrationForm">
+            <fieldset>
+                <legend>Register</legend>
+                <div class="form-group">
+                    <input class="form-control"
+                            name="emailAddress"
+                            placeholder="email address"
+                            data-ng-model="emailAddress"
+                            required    
+                            type="email"/>
+                </div>
+                <div class="form-group">
+                    <input class="form-control"
+                            name="password"
+                            type="password"
+                            placeholder="password"
+                            data-ng-model="password"
+                            required />
+                </div>
+                <div class="form-group">
+                    <input class="form-control"
+                           name="password"
+                           type="password"
+                           placeholder="confirm password"
+                           data-ng-model="passwordConfirmation"
+                           data-match="password"
+                           required />
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary"
+                            data-ng-click="register()"
+                            data-ng-disabled="!registrationForm.$valid">
+                        create account
+                    </button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>

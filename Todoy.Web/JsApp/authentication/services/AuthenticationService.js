@@ -7,9 +7,10 @@ todoy.authentication.services = todoy.authentication.services || {};
 
     var currentUser = null;
 
-    function AuthenticationService(httpService, qService) {
+    function AuthenticationService(httpService, qService, siteUrl) {
         this.httpService = httpService;
         this.qService = qService;
+        this.siteUrl = siteUrl;
     };
 
     AuthenticationService.prototype.getUser = function getUser() {
@@ -47,9 +48,35 @@ todoy.authentication.services = todoy.authentication.services || {};
             Password: password
         }
 
-        self.httpService.post('api/login', userCredentials).
+        self.httpService.post(self.siteUrl + '/api/login', userCredentials).
         success(onLoggedIn).
         error(onErrorLoggingIn);
+
+        return task.promise;
+    };
+
+    AuthenticationService.prototype.registerAsync = function registerAsync(registrationDetails) {
+        var self = this;
+
+        function onRegistered() {
+            task.resolve();
+        }
+
+        function onErrorRegistering(reasons, status) {
+            task.reject(reasons);
+        }
+
+        var task = self.qService.defer();
+
+        var dto = {
+            EmailAddress: registrationDetails.emailAddress,
+            Password: registrationDetails.password,
+            PasswordConfirmation: registrationDetails.PasswordConfirmation
+        };
+
+        self.httpService.post(self.siteUrl + '/api/register', dto).
+        success(onRegistered).
+        error(onErrorRegistering);
 
         return task.promise;
     };
