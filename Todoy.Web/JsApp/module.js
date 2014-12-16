@@ -11,7 +11,7 @@ config([
             when(
                 '/',
                 {
-                    controller: 'ToDoListController',
+                    controller: 'toDoListController',
                     controllerAs: 'ctrl',
                     templateUrl: siteUrl + '/todo/partials/todoList.html'
                 }
@@ -19,7 +19,7 @@ config([
             when(
                 '/login',
                 {
-                    controller: 'AuthenticationController',
+                    controller: 'authenticationController',
                     controllerAs: 'ctrl',
                     templateUrl: siteUrl + '/authentication/partials/login.html'
                 }).
@@ -32,39 +32,46 @@ config([
 run([
     '$rootScope',
     '$location',
-    'AuthenticationService',
-    function(rootScopeService, locationService, authenticationService) {
+    'authenticationService',
+    function (rootScopeService, locationService, authenticationService) {
 
         // register listener to watch route changes
         rootScopeService.$on("$routeChangeStart", function (event, next, current) {
-            if ( authenticationService.getUser() == null ) {
+            if (authenticationService.getUser() == null) {
                 // no logged user, we should be going to #login
-                if ( next.templateUrl == "partials/login.html" ) {
+                if (next.templateUrl == "partials/login.html") {
                     // already going to #login, no redirect needed
                 } else {
                     // not going to #login, we should redirect now
-                    locationService.path( "/login" );
+                    locationService.path("/login");
                 }
-            }         
+            }
         });
     }
 ]).
 service(
-    'AuthenticationService',
+    'authenticationService',
     [
         '$http',
         '$q',
          todoy.authentication.services.AuthenticationService
     ]).
 controller(
-    'AuthenticationController',
+    'authenticationController',
     [
-        'AuthenticationService',
+        'authenticationService',
         '$location',
         todoy.authentication.controllers.AuthenticationController
     ]).
 controller(
-    'ToDoListController',
+    'toDoListController',
     [
         todoy.toDo.controllers.ToDoListController
+    ]).
+directive(
+    'registrationForm',
+    [
+        'siteUrl',
+        todoy.authentication.directives.RegistrationFormFactory
     ]);
+
