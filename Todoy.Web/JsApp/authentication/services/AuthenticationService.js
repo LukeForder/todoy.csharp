@@ -71,7 +71,7 @@ todoy.authentication.services = todoy.authentication.services || {};
         var dto = {
             EmailAddress: registrationDetails.emailAddress,
             Password: registrationDetails.password,
-            PasswordConfirmation: registrationDetails.PasswordConfirmation
+            PasswordConfirmation: registrationDetails.passwordConfirmation
         };
 
         self.httpService.post(self.siteUrl + '/api/register', dto).
