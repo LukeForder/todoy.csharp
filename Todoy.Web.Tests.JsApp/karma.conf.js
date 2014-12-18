@@ -5,7 +5,7 @@ module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: '../Todoy.Web/',
+    basePath: '',
 
 
     // frameworks to use
@@ -15,14 +15,17 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-		"Scripts/underscore.js",
-		"Scripts/jquery-1.9.0.js",
-		"Scripts/bootstrap.js",
-		"Scripts/angular.js",
-		"Scripts/angular-route.js",
-		"authentication/**/*.js",
-		"todo/**/*.js",
-		"JsApp/module.js"
+		"../Todoy.Web/Scripts/underscore.js",
+		"../Todoy.Web/Scripts/jquery-2.1.1.js",
+		"../Todoy.Web/Scripts/bootstrap.js",
+		"../Todoy.Web/Scripts/angular.js",
+		"../Todoy.Web/Scripts/angular-route.js",
+		"../Todoy.Web/Scripts/angular-mocks.js",
+		"../Todoy.Web/Scripts/angular-input-match.js",
+		"../Todoy.Web/JsApp/authentication/**/*.js",
+		"../Todoy.Web/JsApp/todo/**/*.js",
+		"../Todoy.Web/JsApp/module.js",
+		"./*.js"
     ],
 
 
