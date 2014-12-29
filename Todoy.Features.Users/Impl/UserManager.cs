@@ -44,12 +44,15 @@ namespace Todoy.Features.Users.Impl
                 Salt = salt,
                 PasswordHash = PasswordOperations.GenerateHash(registrationRequest.Password, salt),
                 CreatedDate = DateTime.UtcNow,
-                Verified = false
+                Verified = false,
+                VerificationToken = Guid.NewGuid()
             };
 
             User persistedUser = _userStore.Add(user);
 
-            return persistedUser;
+            // TODO: queue email to user with verification link
+
+            return await Task.FromResult(persistedUser);
         }
 
         public  async Task<User> ValidateCredentialsAsync(LoginCredentialWithIPAddress credentials)
@@ -78,7 +81,7 @@ namespace Todoy.Features.Users.Impl
 
             _userStore.Update(user);
 
-            return (loginSucceeded) ? user : null;
+            return await Task.FromResult((loginSucceeded) ? user : null);
         }
     }
 }

@@ -37,7 +37,8 @@ todoy.authentication.services = todoy.authentication.services || {};
                 task.reject(['Invalid user name and password combination.']);
             }
             else {
-                task.reject(reason);
+                console.log(reason.Errors);
+                task.reject(reason.Errors);
             }
         }
 

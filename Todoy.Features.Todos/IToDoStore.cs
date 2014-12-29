@@ -7,10 +7,10 @@ using Todoy.Features.Todos.Models;
 
 namespace Todoy.Features.Todos
 {
-    public interface ITodoManager
+    public interface IToDoStore
     {
-        Task<ToDo> CreateAsync(CreateToDoCommand createCommand);
+        Task<ToDo> AddAsync(ToDo newToDo);
 
-        Task<IEnumerable<ToDo>> GetAllUsersTodosAsync(string emailAddress);
+        Task<IEnumerable<ToDo>> GetAllByEmailAsync(string emailAddress);
     }
 }

@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BC2E63DE-41FE-4937-AA4D-07B317A5DEF1}</ProjectGuid>
+    <ProjectGuid>{243EF135-152B-4030-BB87-2B400C7C1629}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Todoy.Features.Todos</RootNamespace>
-    <AssemblyName>Todoy.Features.Todos</AssemblyName>
+    <RootNamespace>Todoy.Features.Todos.Tests</RootNamespace>
+    <AssemblyName>Todoy.Features.Todos.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -35,6 +35,18 @@
     <Reference Include="FluentValidation">
       <HintPath>..\packages\FluentValidation.5.5.0.0\lib\Net40\FluentValidation.dll</HintPath>
     </Reference>
+    <Reference Include="MongoDB.Bson">
+      <HintPath>..\packages\mongocsharpdriver.1.9.2\lib\net35\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver">
+      <HintPath>..\packages\mongocsharpdriver.1.9.2\lib\net35\MongoDB.Driver.dll</HintPath>
+    </Reference>
+    <Reference Include="Moq">
+      <HintPath>..\packages\Moq.4.2.1409.1722\lib\net40\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="NSpec">
+      <HintPath>..\packages\nspec.0.9.68\lib\NSpec.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -44,13 +56,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ITodoManager.cs" />
-    <Compile Include="IToDoStore.cs" />
+    <Compile Include="todo_store_spec.cs" />
+    <Compile Include="DebuggerShim.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TodoManager.cs" />
-    <Compile Include="Validators\ToDoValidator.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Todoy.Features.Todos.Data\Todoy.Features.Todos.Data.csproj">
+      <Project>{9b522739-75fd-4239-a697-4691848e477a}</Project>
+      <Name>Todoy.Features.Todos.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Todoy.Features.Todos.Dto\Todoy.Features.Todos.Dto.csproj">
       <Project>{9d2b7ea9-b8e5-4c84-a651-28117b625c5e}</Project>
       <Name>Todoy.Features.Todos.Dto</Name>
@@ -59,9 +73,16 @@
       <Project>{02a455b3-4f91-4d22-88d9-3ff0e83a9476}</Project>
       <Name>Todoy.Features.Todos.Models</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Todoy.Features.Todos\Todoy.Features.Todos.csproj">
+      <Project>{bc2e63de-41fe-4937-aa4d-07b317a5def1}</Project>
+      <Name>Todoy.Features.Todos</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

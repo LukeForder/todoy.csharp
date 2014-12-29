@@ -79,12 +79,20 @@ namespace Todoy.Web.Api
                 return HttpStatusCode.Unauthorized;
             }
 
-            var nancyUser = new UserIdentity(user.EmailAddress, new string[0]);
+            if (user.Verified)
+            {
+                var nancyUser = new UserIdentity(user.EmailAddress, new string[0]);
 
-            var authenticationToken = _tokenizer.Tokenize(nancyUser, Context);
+                var authenticationToken = _tokenizer.Tokenize(nancyUser, Context);
 
+                return authenticationToken;
+            }
+            else
+            {
+                return CreateBadResponse("You need to verify your email address before your user account will be created, check the inbox of your registered email address.");
+            }
+                
 
-            return authenticationToken;
         }
 
         public async Task<dynamic> OnRegisterNewUser(RegistrationRequest registrationRequest)

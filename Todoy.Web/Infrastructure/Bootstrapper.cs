@@ -17,6 +17,10 @@ using Todoy.Features.Users.Data.Indexing;
 using Nancy.Authentication.Token;
 using SquishIt.Framework;
 using Nancy.Conventions;
+using Todoy.Features.Todos;
+using Todoy.Features.Todos.Data;
+using Todoy.Features.Todos.Models;
+using Todoy.Features.Todos.Validators;
 
 namespace Todoy.Web.Infrastructure
 {
@@ -62,6 +66,19 @@ namespace Todoy.Web.Infrastructure
                     });
 
             container
+              .Bind<MongoCollection<ToDo>>()
+              .ToMethod(
+                  (ctx) =>
+                  {
+                      var database = ctx.Kernel.Get<MongoDatabase>();
+
+                      var todoCollection = database.GetCollection<ToDo>("todos");
+
+                      return todoCollection;
+                  });
+
+
+            container
                 .Bind<IValidator<User>>()
                 .To<UserValidator>();
 
@@ -76,6 +93,18 @@ namespace Todoy.Web.Infrastructure
             container
                 .Bind<IUserStore>()
                 .To<UserStore>();
+
+            container
+                .Bind<IToDoStore>()
+                .To<TodoStore>();
+
+            container
+                .Bind<IValidator<ToDo>>()
+                .To<ToDoValidator>();
+
+            container
+                .Bind<ITodoManager>()
+                .To<TodoManager>();
 
             container
                 .Bind<ITokenizer>()
@@ -96,7 +125,7 @@ namespace Todoy.Web.Infrastructure
 
             Bundle
                 .JavaScript()
-                .Add("~/Scripts/jquery-1.9.0.js")
+                .Add("~/Scripts/jquery-2.1.1.js")
                 .Add("~/Scripts/angular.js")
                 .Add("~/Scripts/angular-route.js")
                 .Add("~/Scripts/angular-input-match.js")

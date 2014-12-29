@@ -5,10 +5,14 @@ todoy.toDo.services = todoy.toDo.services || {};
 
 (function addToDoServiceToNamespace(ns) {
 
-    function ToDoService(httpService, qService, siteUrl) {
+    var currentUser = null;
+
+    function ToDoService(httpService, qService, siteUrl, authenticationService) {
         this.httpService = httpService;
         this.qService = qService;
         this.siteUrl = siteUrl;
+
+        currentUser = authenticationService.getUser();
     }
 
     ToDoService.prototype.addAsync = function AddAsync(toDo) {
@@ -17,26 +21,58 @@ todoy.toDo.services = todoy.toDo.services || {};
             task.resolve(toDo);
         }
 
-        function onErrorAddingToDo(reasons, status) {
-            console.log("error adding toDo %o, %i", reasons, status);
-            task.reject(reasons);
+        function onErrorAddingToDo(dto, status) {
+            console.log("error adding toDo %o, %i", dto.Errors, status);
+            task.reject(dto.Errors);
         }
 
         var self = this;
 
-        var task = self.httpService.defer();
+        var task = self.qService.defer();
 
         var toDoDto = {
-            Details: toDo.Details
+            Details: toDo.details
         };
-        
-        self.httpService.post(self.siteUrl + '/api/todo', toDoDto).
+
+        self.httpService.post(self.siteUrl + '/api/todo', toDoDto, { headers: { 'Authorization': "Token " + currentUser.token }}).
         success(onAddedToDo).
         error(onErrorAddingToDo);
 
         return task.promise;
-    }
+    };
+
+    ToDoService.prototype.getAllAsync = function getAllAsync() {
+
+        function onGotAll(dtos) {
+            var models =  dtos.map(
+                function (dto) {
+                    var model = new todoy.toDo.models.ToDoItem();
+
+                    model.details = dto.Details;
+                    model.date = dto.CreatedDate;
+                    model.done = !!dto.DoneDate;
+
+                    return model;
+                });
+
+            task.resolve(models);
+        }
+
+        function onFailedToGetAll(response, status) {
+            task.reject(response.Errors);
+        }
+        
+        var self = this;
+
+        var task = self.qService.defer();
+
+        self.httpService.get(self.siteUrl + '/api/todo', { headers: { 'Authorization': "Token " + currentUser.token } }).
+           success(onGotAll).
+           error(onFailedToGetAll);
+
+        return task.promise;
+    };
 
     ns.ToDoService = ToDoService;
 
-})(todoy.toDo.controllers);
+})(todoy.toDo.services);

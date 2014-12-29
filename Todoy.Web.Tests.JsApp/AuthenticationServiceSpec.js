@@ -46,10 +46,8 @@ describe(
 		"rejects an invalid username/password combination",
 		function() {
 			
-			createPasswordValidationRequest(httpBackend).
-				respond(401, '');
-				
-							
+			createPasswordValidationRequest(httpBackend).respond(401, '');
+			
 			var promise = authenticationService.validateCredentialsAsync('foo', 'bar');
 			
 			httpBackend.flush();
@@ -93,11 +91,10 @@ describe(
 		"sets the error reasons when the server when the server returns an error response",
 		function() {
 			var token = "authenticationToken",
-				errorMessage = 'An error occured logging in! :(';
-		
 				
+			errorMessage = 'An error occured logging in! :(';
 		
-			createPasswordValidationRequest(httpBackend).respond(500, [errorMessage]);
+			createPasswordValidationRequest(httpBackend).respond(500, {Errors: [errorMessage] });
 			
 			var promise =  authenticationService.validateCredentialsAsync('foo', 'bar');
 			

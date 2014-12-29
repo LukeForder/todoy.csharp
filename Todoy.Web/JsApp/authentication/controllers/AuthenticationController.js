@@ -5,12 +5,32 @@ todoy.authentication.controllers = todoy.authentication.controllers || {};
 
 (function addAuthenticationControllerToNamespace(ns) {
 
-    function AuthenticationController(authenticationService, locationService) {
+    function AuthenticationController(scope, authenticationService, locationService) {
         this.authenticationService = authenticationService;
         this.locationService = locationService;
         this.emailAddress = null;
         this.password = null;
         this.flash = null;
+        this.flashStyle = 'error';
+
+        this._scope = scope;
+        this._scope.$on('user-registered', this.onUserRegistered.bind(this));
+        this._scope.$on('user-registeration-failed', this.onUserRegistrationFailed.bind(this))
+
+        console.log(this._scope);
+    };
+
+    AuthenticationController.prototype.onUserRegistrationFailed = function onUserRegistrationFailed(event, errors) {
+        this.flash = errors;
+        this.flashStyle = 'error';
+    };
+
+    AuthenticationController.prototype.onUserRegistered = function onUserRegistered() {
+        var self = this;
+
+        this.flashStyle = 'success';
+
+        this.flash = ["You have sucessfully registered, an email has been sent to your account with instructions on how to login."];
     };
 
     AuthenticationController.prototype.attemptSignIn = function attemptSignIn() {

@@ -5,6 +5,7 @@ todoy.authentication.models = todoy.authentication.models || {};
 
 (function addRegistrationDetailsToNamespace(ns) {
 
+
     function RegistrationDetails(emailAddress, password, passwordConfirmation) {
         this.emailAddress = emailAddress;
         this.password = password;

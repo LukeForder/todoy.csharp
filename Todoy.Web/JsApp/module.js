@@ -50,6 +50,15 @@ run([
     }
 ]).
 service(
+    'toDoService',
+    [
+        '$http',
+        '$q',
+        'siteUrl',
+        'authenticationService',
+        todoy.toDo.services.ToDoService
+    ]).
+service(
     'authenticationService',
     [
         '$http',
@@ -60,6 +69,7 @@ service(
 controller(
     'authenticationController',
     [
+        '$scope',
         'authenticationService',
         '$location',
         todoy.authentication.controllers.AuthenticationController
@@ -67,11 +77,13 @@ controller(
 controller(
     'toDoListController',
     [
+        'toDoService',
         todoy.toDo.controllers.ToDoListController
     ]).
 controller(
     'registrationController',
     [
+        '$scope',
         'authenticationService',
         todoy.authentication.controllers.RegistrationController
     ]).

@@ -57,5 +57,10 @@ namespace Todoy.Features.Users.Models
             set;
         }
 
+        public Guid VerificationToken
+        {
+            get;
+            set;
+        }
     }
 }

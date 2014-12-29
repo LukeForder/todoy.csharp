@@ -13,6 +13,8 @@ todoy.toDo.controllers = todoy.toDo.controllers || {};
         this.toDoList = [];
         this.newToDo = new todoy.toDo.models.ToDoItem();
         this.flash = null;
+
+        this.getAll();
     }
 
     ToDoListController.prototype.canAddToDo = function canAddToDo() {
@@ -28,13 +30,40 @@ todoy.toDo.controllers = todoy.toDo.controllers || {};
         return this.showDoneToDos ? this.toDoList : this.toDoList.filter(toDoIsNotCompleted);
     };
 
+    ToDoListController.prototype.getAll = function getAll() {
+
+        var self = this;
+
+        console.log('fetched all');
+
+        function onFetchedAll(dto) {
+            console.log(dto);
+            self.toDoList = dto;
+        }
+
+        function onFailedToFetchAll(response, status) {
+            // TODO: display the error
+        }
+
+        self.toDoService.getAllAsync().then(onFetchedAll, onFailedToFetchAll);
+    };
+
     ToDoListController.prototype.addToDo = function addToDo() {
 
         var self = this;
 
-        self.toDoList.push(self.newToDo);
+        function onAddedToDo() {
+            self.toDoList.push(self.newToDo);
+            self.newToDo = new todoy.toDo.models.ToDoItem();
+        }
 
-        self.newToDo = new todoy.toDo.models.ToDoItem();
+        function failedToAddToDo() {
+            // TODO: display the error notification
+        }
+
+        self.toDoService.
+            addAsync(self.newToDo).
+            then(onAddedToDo, failedToAddToDo);
     };
 
     ToDoListController.prototype.complete = function complete(toDo) {

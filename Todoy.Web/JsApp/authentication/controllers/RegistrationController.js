@@ -6,8 +6,11 @@ todoy.authentication.controllers = todoy.authentication.controllers || {};
 (function addRegistrationControllerToNamespace(ns) {
 
     function RegistrationController(
+        scope,
         authenticationService) {
         
+        this.scope = scope;
+
         this.authenticationService = authenticationService;
         this.password = null;
         this.passwordConfirmation = null;
@@ -19,11 +22,19 @@ todoy.authentication.controllers = todoy.authentication.controllers || {};
         var self = this;
 
         function onRegistered() {
-            // TODO: notify user to validate email address
+            self.userName = null;
+            self.password = null;
+            self.passwordConfirmation = null;
+
+            self.scope.$emit('user-registered');
         }
 
         function onFailedToRegister(data) {
             self.messages = data.Errors;
+
+            self.scope.$emit(
+                'user-registeration-failed',
+                self.messages);
         }
 
         var registrationDetails = new todoy.authentication.models.RegistrationDetails(self.userName, self.password, self.passwordConfirmation);

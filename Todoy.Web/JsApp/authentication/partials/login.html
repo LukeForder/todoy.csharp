@@ -1,6 +1,16 @@
-﻿<div class="alert alert-danger"
+﻿<div class="alert"
+     data-ng-class="{'alert-danger': ctrl.flashStyle == 'error', 'alert-success': ctrl.flashStyle  == 'success'}"
      data-ng-show="ctrl.flash && ctrl.flash.length > 0">
-    <h3>Whoops!</h3>
+    <h3>
+        <span data-ng-switch="ctrl.flashStyle">
+            <span data-ng-switch-when="error">
+                Whoops!
+            </span>
+            <span data-ng-switch-when="success">
+                Hurrah!
+            </span>
+        </span>
+    </h3>
     <ul class="list-unstyled">
         <li data-ng-repeat="message in ctrl.flash">
             {{message}}

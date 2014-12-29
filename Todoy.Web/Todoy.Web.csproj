@@ -927,6 +927,9 @@
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\FontAwesome.otf" />
     <Content Include="Less\custom.less" />
+    <None Include="Scripts\jquery-2.1.1.intellisense.js" />
+    <Content Include="Scripts\jquery-2.1.1.js" />
+    <Content Include="Scripts\jquery-2.1.1.min.js" />
     <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\underscore.js" />
     <Content Include="Scripts\underscore.min.js" />
@@ -1017,6 +1020,7 @@
     <Content Include="Less\utilities.less" />
     <Content Include="Less\variables.less" />
     <Content Include="Less\wells.less" />
+    <Content Include="Scripts\jquery-2.1.1.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1042,6 +1046,22 @@
     <ProjectReference Include="..\Todoy.Dto\Todoy.Dto.csproj">
       <Project>{2a82e697-1e78-466a-b912-c79e2d5486fd}</Project>
       <Name>Todoy.Dto</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Todoy.Features.Todos.Data\Todoy.Features.Todos.Data.csproj">
+      <Project>{9b522739-75fd-4239-a697-4691848e477a}</Project>
+      <Name>Todoy.Features.Todos.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Todoy.Features.Todos.Dto\Todoy.Features.Todos.Dto.csproj">
+      <Project>{9d2b7ea9-b8e5-4c84-a651-28117b625c5e}</Project>
+      <Name>Todoy.Features.Todos.Dto</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Todoy.Features.Todos.Models\Todoy.Features.Todos.Models.csproj">
+      <Project>{02a455b3-4f91-4d22-88d9-3ff0e83a9476}</Project>
+      <Name>Todoy.Features.Todos.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Todoy.Features.Todos\Todoy.Features.Todos.csproj">
+      <Project>{bc2e63de-41fe-4937-aa4d-07b317a5def1}</Project>
+      <Name>Todoy.Features.Todos</Name>
     </ProjectReference>
     <ProjectReference Include="..\Todoy.Features.Users.Data\Todoy.Features.Users.Data.csproj">
       <Project>{979b05e0-a8df-46d7-b63d-ea7f89a10d75}</Project>
