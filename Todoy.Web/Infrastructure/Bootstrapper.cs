@@ -129,6 +129,7 @@ namespace Todoy.Web.Infrastructure
                 .Add("~/Scripts/angular.js")
                 .Add("~/Scripts/angular-route.js")
                 .Add("~/Scripts/angular-input-match.js")
+                .Add("~/Scripts/moment.js")
                 .WithMinifier<SquishIt.Framework.Minifiers.JavaScript.MsMinifier>()
                 .ForceRelease()
                 .AsCached("all", "~/js/all");

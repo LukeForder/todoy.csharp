@@ -44,5 +44,18 @@ namespace Todoy.Features.Todos.Data
 
             return await Task.FromResult(results);
         }
+
+        public async Task<ToDo> GetAsync(Guid id)
+        {
+            return await Task.FromResult(_toDoCollection.FindOneById(id));
+        }
+
+        public async Task SaveAsync(ToDo todo)
+        {
+            _toDoValidator.ValidateAndThrow(todo);
+
+            _toDoCollection.Save(todo);
+
+        }
     }
 }

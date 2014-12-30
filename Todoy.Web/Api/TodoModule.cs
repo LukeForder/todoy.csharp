@@ -27,12 +27,8 @@ namespace Todoy.Web.Api
 
             Get["api/todo", true] = (args, ct) => OnGetAllTodosAsync();
 
-            Put["api/todo/{id:guid}/completed", true] =
-               async (args, ct) =>
-               {
-                   return HttpStatusCode.OK;
-               };
-
+            Patch["api/todo/{id:guid}/completed", true] = (args, ct) => OnCompleteTodoAsync((Guid)args.id);
+               
             Put["api/todo/{id:guid}", true] =
                async (args, ct) =>
                {
@@ -44,6 +40,13 @@ namespace Todoy.Web.Api
                {
                    return HttpStatusCode.OK;
                };
+        }
+
+        private async Task<dynamic> OnCompleteTodoAsync(Guid id)
+        {
+            await _todoManager.CompleteTodoAsync(id);
+
+            return HttpStatusCode.OK;
         }
 
         private async Task<dynamic> OnGetAllTodosAsync()

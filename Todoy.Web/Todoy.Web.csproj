@@ -143,6 +143,7 @@
     <Content Include="JsApp\authentication\services\AuthenticationService.js" />
     <Content Include="JsApp\module.js" />
     <Content Include="JsApp\todo\controllers\ToDoListController.js" />
+    <Content Include="JsApp\todo\filters\HumanDateFilter.js" />
     <Content Include="JsApp\todo\models\ToDoItem.js" />
     <Content Include="JsApp\todo\partials\todoList.html" />
     <Content Include="JsApp\todo\services\ToDoService.js" />
@@ -930,6 +931,10 @@
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\underscore.js" />
     <Content Include="Scripts\underscore.min.js" />

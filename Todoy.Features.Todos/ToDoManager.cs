@@ -42,5 +42,21 @@ namespace Todoy.Features.Todos
         {
             return await _toDoStore.GetAllByEmailAsync(emailAddress);
         }
+
+        public async Task<ToDo> GetAsync(Guid id)
+        {
+            return await _toDoStore.GetAsync(id);
+        }
+
+        public async Task CompleteTodoAsync(Guid id)
+        {
+            ToDo todo = await this.GetAsync(id);
+            if (todo != null)
+            {
+                todo.DoneDate = DateTime.UtcNow;
+
+                await _toDoStore.SaveAsync(todo);
+            }
+        }
     }
 }

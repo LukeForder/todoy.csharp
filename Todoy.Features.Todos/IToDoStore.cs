@@ -12,5 +12,9 @@ namespace Todoy.Features.Todos
         Task<ToDo> AddAsync(ToDo newToDo);
 
         Task<IEnumerable<ToDo>> GetAllByEmailAsync(string emailAddress);
+
+        Task<ToDo> GetAsync(Guid id);
+
+        Task SaveAsync(ToDo todo);
     }
 }

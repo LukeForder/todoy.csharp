@@ -34,8 +34,6 @@ todoy.toDo.controllers = todoy.toDo.controllers || {};
 
         var self = this;
 
-        console.log('fetched all');
-
         function onFetchedAll(dto) {
             console.log(dto);
             self.toDoList = dto;
@@ -68,7 +66,22 @@ todoy.toDo.controllers = todoy.toDo.controllers || {};
 
     ToDoListController.prototype.complete = function complete(toDo) {
         var self = this;
-        toDo.done = true;
+
+        function onCompleted() {
+            toDo.done = true;
+        }
+
+        function onErrorCompleting() {
+            // TODO: show a message
+        }
+
+        console.log(toDo);
+
+        self.
+            toDoService.
+            completeToDoAsync(toDo).
+            then(onCompleted, onErrorCompleting);
+
     };
 
     ns.ToDoListController = ToDoListController;

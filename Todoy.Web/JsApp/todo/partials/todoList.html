@@ -28,16 +28,16 @@
 <div>
     <div class="panel panel-default interactive"
          data-ng-click="ctrl.complete(toDo)"
-         data-ng-repeat="toDo in ctrl.visibleToDos()">
+         data-ng-repeat="toDo in ctrl.visibleToDos() | orderBy:'date'">
         <div class="panel-body">
             <div class="row">
                 <div class="col-lg-8">
                     {{toDo.details}}
                 </div>
-                <div class="col-lg-3">
-                    {{toDo.date}}
+                <div class="col-lg-3 text-right">
+                    {{toDo.date | readableDate}}
                 </div>
-                <div class="col-lg-1 text-right">
+                <div class="col-lg-1 text-center">
                     <i class="fa fa-2x fa-check-circle text-primary"
                        data-ng-show="toDo.done" />
                 </div>

@@ -51,6 +51,7 @@ todoy.toDo.services = todoy.toDo.services || {};
                     model.details = dto.Details;
                     model.date = dto.CreatedDate;
                     model.done = !!dto.DoneDate;
+                    model.id = dto.Id;
 
                     return model;
                 });
@@ -71,6 +72,37 @@ todoy.toDo.services = todoy.toDo.services || {};
            error(onFailedToGetAll);
 
         return task.promise;
+    };
+
+    ToDoService.prototype.completeToDoAsync = function completeToDoAsync(todo) {
+        
+        function onToDoMarkedAsComplete(dto) {
+            task.resolve(dto);
+        }
+
+        function onErrorMarkingToDoAsComplete(response, status) {
+            task.reject(response.Errors);
+        }
+
+        var self = this;
+
+        var task = self.qService.defer();
+
+        var url = self.siteUrl + '/api/todo/' + todo.id + '/completed';
+
+        self.httpService.patch(
+            url,
+            null, // no data to send
+            {
+                headers: {
+                    'Authorization': "Token " + currentUser.token
+                }
+            }).
+        success(onToDoMarkedAsComplete).
+        error(onErrorMarkingToDoAsComplete);
+
+        return task.promise;
+
     };
 
     ns.ToDoService = ToDoService;

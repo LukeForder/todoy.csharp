@@ -92,5 +92,10 @@ directive(
     [
         'siteUrl',
         todoy.authentication.directives.RegistrationFormFactory
-    ]);
+    ]).
+filter(
+    'readableDate',
+    function readableDateProvider() {
+        return todoy.toDo.filters.HumanDateFilter;
+    });
 

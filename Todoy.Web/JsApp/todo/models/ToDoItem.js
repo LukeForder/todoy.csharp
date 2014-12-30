@@ -9,6 +9,8 @@ todoy.toDo.models = todoy.toDo.models || {};
         this.details = null;
         this.date = null;
         this.done = false;
+        this.id = null;
+
     }
     
     ns.ToDoItem = ToDoItem;
