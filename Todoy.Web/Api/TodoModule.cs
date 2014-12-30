@@ -10,11 +10,15 @@ using Todoy.Features.Todos.Dto;
 using Nancy.ModelBinding;
 using Todoy.Features.Todos.Models;
 using FluentValidation;
+using Common.Logging;
+using Newtonsoft.Json;
 
 namespace Todoy.Web.Api
 {
     public class TodoModule : NancyModule
     {
+        readonly ILog _log = LogManager.GetCurrentClassLogger();
+
         private readonly ITodoManager _todoManager;
 
         public TodoModule(ITodoManager todoManager)
@@ -28,26 +32,28 @@ namespace Todoy.Web.Api
             Get["api/todo", true] = (args, ct) => OnGetAllTodosAsync();
 
             Patch["api/todo/{id:guid}/completed", true] = (args, ct) => OnCompleteTodoAsync((Guid)args.id);
-               
-            Put["api/todo/{id:guid}", true] =
-               async (args, ct) =>
-               {
-                   return HttpStatusCode.OK;
-               };
-
-            Delete["api/todo/{id:guid}", true] =
-               async (args, ct) =>
-               {
-                   return HttpStatusCode.OK;
-               };
         }
 
         private async Task<dynamic> OnCompleteTodoAsync(Guid id)
         {
-            await _todoManager.CompleteTodoAsync(id);
+            try 
+	        {
+                await _todoManager.CompleteTodoAsync(id);
 
-            return HttpStatusCode.OK;
+                return HttpStatusCode.OK;
+	        }
+            catch (ValidationException exception)
+            {
+                return CreateValidationFailedResponse(exception);
+            }
+	        catch (Exception exception)
+	        {
+                LogError(exception);
+
+                return CreateErrorResponse("An unexpected error prevent us from marking your todo as complete. :(");
+	        }
         }
+
 
         private async Task<dynamic> OnGetAllTodosAsync()
         {
@@ -59,9 +65,9 @@ namespace Todoy.Web.Api
             }
             catch (Exception exception)
             {
-                // TODO: log the exception details
+                LogError(exception);
 
-                return CreateErrorResponse("Something has gone horribly wrong :(");
+                return CreateErrorResponse("Something has gone horribly wrong whilst loading your todos. :(");
             }
         }
 
@@ -90,20 +96,26 @@ namespace Todoy.Web.Api
             }
             catch (ValidationException exception)
             {
-                return
-                    Negotiate
+                return CreateValidationFailedResponse(exception);                  
+            }
+            catch (Exception exception)
+            {
+                LogError(exception);
+
+                return CreateErrorResponse("Something has gone horribly wrong creating your todo. :(");
+            }
+        }
+
+        private dynamic CreateValidationFailedResponse(ValidationException exception)
+        {
+            return
+                  Negotiate
                     .WithStatusCode(HttpStatusCode.BadRequest)
                     .WithModel(
                         new Dto.ErrorDto
                         {
                             Errors = exception.Errors.Select(x => x.ErrorMessage)
                         });
-            }
-            catch (Exception exception)
-            {
-                //TODO: log and sanitize
-                return CreateErrorResponse("Something has gone horribly wrong :(");
-            }
         }
 
         private dynamic CreateErrorResponse(params string[] messages)
@@ -116,6 +128,15 @@ namespace Todoy.Web.Api
                     {
                         Errors = messages
                     });
+        }
+
+        private void LogError(Exception exception)
+        {
+            object loggableException = exception.AsLoggable();
+
+            string exceptionString = JsonConvert.SerializeObject(loggableException);
+
+            _log.Error(exceptionString);
         }
 
     }
