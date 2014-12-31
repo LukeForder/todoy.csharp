@@ -67,7 +67,7 @@ namespace Todoy.Web.Api
             {
                 LogError(exception);
 
-                return CreateErrorResponse("Something has gone horribly wrong whilst loading your todos. :(");
+                return CreateErrorResponse("Something has gone horribly wrong whilst fetching your todos. :(");
             }
         }
 
