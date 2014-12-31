@@ -23,6 +23,7 @@ namespace Todoy.Web.Test
     public class todo_api_spec : nspec
     {
         // TODO: programmatically verify that exceptions are logged
+        // TODO: test for authentication required
 
         Browser browser = null;
 
