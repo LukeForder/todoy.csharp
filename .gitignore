@@ -216,3 +216,6 @@ $RECYCLE.BIN/
 *.msi
 *.msm
 *.msp
+
+#Nancy token auth key store
+keyStore
