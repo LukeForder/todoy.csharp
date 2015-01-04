@@ -123,6 +123,7 @@ publish/
 # Publish Web Output
 *.[Pp]ublish.xml
 *.azurePubxml
+*.Release.config
 
 # NuGet Packages Directory
 packages/

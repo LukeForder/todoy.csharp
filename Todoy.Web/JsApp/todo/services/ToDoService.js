@@ -15,10 +15,27 @@ todoy.toDo.services = todoy.toDo.services || {};
         currentUser = authenticationService.getUser();
     }
 
+    function asModel(dto) {
+
+        var model = new todoy.toDo.models.ToDoItem();
+
+        model.details = dto.Details;
+        model.date = dto.CreatedDate;
+        model.done = !!dto.DoneDate;
+        model.id = dto.Id;
+
+        return model;
+    }
+
     ToDoService.prototype.addAsync = function AddAsync(toDo) {
 
-        function onAddedToDo(toDo) {
-            task.resolve(toDo);
+        function onAddedToDo(dto) {
+
+            var model = asModel(dto);
+
+            console.log(model);
+
+            task.resolve(model);
         }
 
         function onErrorAddingToDo(dto, status) {
@@ -46,14 +63,7 @@ todoy.toDo.services = todoy.toDo.services || {};
         function onGotAll(dtos) {
             var models =  dtos.map(
                 function (dto) {
-                    var model = new todoy.toDo.models.ToDoItem();
-
-                    model.details = dto.Details;
-                    model.date = dto.CreatedDate;
-                    model.done = !!dto.DoneDate;
-                    model.id = dto.Id;
-
-                    return model;
+                    return asModel(dto);
                 });
 
             task.resolve(models);

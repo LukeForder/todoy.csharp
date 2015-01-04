@@ -83,5 +83,22 @@ namespace Todoy.Features.Users.Impl
 
             return await Task.FromResult((loginSucceeded) ? user : null);
         }
+
+        public async Task VerifyEmailAddressAsync(string emailAddress, Guid verificationToken)
+        {
+            User user = _userStore.Get(emailAddress);
+
+            if (user == null)
+            {
+                return;
+            }
+
+            if (verificationToken == user.VerificationToken)
+            {
+                user.Verified = true;
+
+                _userStore.Update(user);
+            }
+        }
     }
 }

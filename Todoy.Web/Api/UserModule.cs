@@ -11,6 +11,7 @@ using Todoy.Features.Users.Models;
 using System.Threading.Tasks;
 using Nancy.Authentication.Token;
 using Todoy.Web.Infrastructure;
+using System.Text;
 
 namespace Todoy.Web.Api
 {
@@ -67,6 +68,7 @@ namespace Todoy.Web.Api
                     }
 
                 };
+
         }
 
         private async Task<dynamic> OnLoginAttempt(LoginCredentialWithIPAddress loginCredentials)
@@ -100,6 +102,12 @@ namespace Todoy.Web.Api
             try
             {
                 User user = await _userManager.RegisterUserAsync(registrationRequest);
+
+                RegistrationMailer mailer = new RegistrationMailer();
+
+                string verificationUrl = Context.Request.Url.SiteBase;
+
+                await mailer.SendVerificationMailAsync(verificationUrl, user);
 
                 return HttpStatusCode.OK;
             }

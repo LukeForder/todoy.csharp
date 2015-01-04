@@ -12,5 +12,7 @@ namespace Todoy.Features.Users
         Task<User> RegisterUserAsync(Dto.RegistrationRequest registrationRequest);
 
         Task<User> ValidateCredentialsAsync(LoginCredentialWithIPAddress credentials);
+
+        Task VerifyEmailAddressAsync(string emailAddress, Guid verificationToken);
     }
 }

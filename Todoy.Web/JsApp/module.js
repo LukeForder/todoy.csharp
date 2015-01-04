@@ -1,7 +1,7 @@
 ﻿angular.module(
     'todoy',
     ['ngRoute', 'validation.match']).
-constant('siteUrl', "http://localhost:56749").
+constant('siteUrl', "http://todoy.azurewebsites.net").
 constant('user', null).
 config([
     '$routeProvider',

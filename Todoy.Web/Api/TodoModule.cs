@@ -30,6 +30,9 @@ namespace Todoy.Web.Api
             Post["api/todo", true] = (args, ct) => OnCreateTodoAsync();
 
             Get["api/todo", true] = (args, ct) => OnGetAllTodosAsync();
+            
+
+
 
             Patch["api/todo/{id:guid}/completed", true] = (args, ct) => OnCompleteTodoAsync((Guid)args.id);
         }
@@ -89,7 +92,7 @@ namespace Todoy.Web.Api
                 return new ToDoDto
                 {
                     Id = todo.Id,
-                    DoneDate = todo.CreatedDate,
+                    DoneDate = todo.DoneDate,
                     CreatedDate = todo.CreatedDate,
                     Details = todo.Details
                 };

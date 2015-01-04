@@ -50,8 +50,8 @@ todoy.toDo.controllers = todoy.toDo.controllers || {};
 
         var self = this;
 
-        function onAddedToDo() {
-            self.toDoList.push(self.newToDo);
+        function onAddedToDo(todo) {
+            self.toDoList.push(todo);
             self.newToDo = new todoy.toDo.models.ToDoItem();
         }
 

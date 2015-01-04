@@ -8,13 +8,18 @@ using System.Threading.Tasks;
 
 using SquishIt.Less;
 using System.IO;
+using Todoy.Features.Users;
 
 namespace Todoy.Web.Site
 {
     public class SiteModule : NancyModule
     {
-        public SiteModule()
+        private readonly IUserManager _userManager;
+
+        public SiteModule(IUserManager userManager)
         {
+            _userManager = userManager;
+
             Get["/"] = (args) =>
             {
                 return View["index.html"];
@@ -43,9 +48,28 @@ namespace Todoy.Web.Site
                             "text/css");
                 };
 
-
+            Get["verify/{token}", true] = (args, ct) => OnVerifyEmailAddress(args.token);
 
         }
+
+        private async Task<dynamic> OnVerifyEmailAddress(string token)
+        {
+            byte[] tokenBytes = Convert.FromBase64String(token);
+
+            string verificationDetails = Encoding.UTF8.GetString(tokenBytes);
+
+            string[] parts = verificationDetails.Split(';');
+
+            Guid verificationGuid;
+
+            if (parts.Length == 2 && Guid.TryParse(parts[1], out verificationGuid))
+            {
+                await _userManager.VerifyEmailAddressAsync(parts[0], verificationGuid);
+            }
+
+            return Response.AsRedirect("/");
+        }
+
 
         private async Task<Response> CreateResponse(string content, string mimeType)
         {

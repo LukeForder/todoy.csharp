@@ -21,6 +21,7 @@ using Todoy.Features.Todos;
 using Todoy.Features.Todos.Data;
 using Todoy.Features.Todos.Models;
 using Todoy.Features.Todos.Validators;
+using System.Configuration;
 
 namespace Todoy.Web.Infrastructure
 {
@@ -34,11 +35,15 @@ namespace Todoy.Web.Infrastructure
                 .Bind<MongoDatabase>()
                 .ToMethod((ctx) =>
                 {
-                    var client = new MongoClient();
+                    string mongoDBConnectionString = ConfigurationManager.AppSettings["mongolab-uri"];
+
+                    string todoyDBName = ConfigurationManager.AppSettings["database-name"];
+
+                    var client = new MongoClient(mongoDBConnectionString);
 
                     var server = client.GetServer();
 
-                    var database = server.GetDatabase("todoy_uat");
+                    var database = server.GetDatabase(todoyDBName);
 
                     return database;
                 });
