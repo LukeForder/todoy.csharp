@@ -16,7 +16,7 @@ namespace Todoy.Features.Users
 
             return salt;
         }
-
+        
         public static string GenerateHash(string clearTextPassword, string salt)
         {
             if (string.IsNullOrWhiteSpace(salt))

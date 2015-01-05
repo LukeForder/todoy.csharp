@@ -137,7 +137,7 @@ namespace Todoy.Web.Test
                 () => {
 
                     todoManager
-                        .Setup(x => x.CompleteTodoAsync(It.IsAny<Guid>()))
+                        .Setup(x => x.CompleteTodoAsync(It.IsAny<CompleteToDoCommand>()))
                         .Returns(Task.FromResult<object>(null));
 
                     var response = browser.Patch(string.Format("api/todo/{0}/completed", Guid.NewGuid()));
@@ -154,7 +154,7 @@ namespace Todoy.Web.Test
                 ValidationException exception = new ValidationException(validationFailures);
 
                 todoManager
-                    .Setup(x => x.CompleteTodoAsync(It.IsAny<Guid>()))
+                    .Setup(x => x.CompleteTodoAsync(It.IsAny<CompleteToDoCommand>()))
                     .Throws(exception);
 
                 var response = browser.Patch(string.Format("api/todo/{0}/completed", Guid.NewGuid()));
@@ -174,7 +174,7 @@ namespace Todoy.Web.Test
                     var unhandledException = new Exception("BOOM!");
 
                     todoManager
-                        .Setup(x => x.CompleteTodoAsync(It.IsAny<Guid>()))
+                        .Setup(x => x.CompleteTodoAsync(It.IsAny<CompleteToDoCommand>()))
                         .Throws(unhandledException);
 
 

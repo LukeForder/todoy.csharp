@@ -15,6 +15,6 @@ namespace Todoy.Features.Todos
 
         Task<ToDo> GetAsync(Guid id);
 
-        Task CompleteTodoAsync(Guid id);
+        Task CompleteTodoAsync(CompleteToDoCommand completeCommand);
     }
 }

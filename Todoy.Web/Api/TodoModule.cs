@@ -31,9 +31,6 @@ namespace Todoy.Web.Api
 
             Get["api/todo", true] = (args, ct) => OnGetAllTodosAsync();
             
-
-
-
             Patch["api/todo/{id:guid}/completed", true] = (args, ct) => OnCompleteTodoAsync((Guid)args.id);
         }
 
@@ -41,7 +38,15 @@ namespace Todoy.Web.Api
         {
             try 
 	        {
-                await _todoManager.CompleteTodoAsync(id);
+                var userName = Context.CurrentUser.UserName;
+
+                var command = new CompleteToDoCommand
+                {
+                    UserName = userName,
+                    ToDoId = id
+                };
+
+                await _todoManager.CompleteTodoAsync(command);
 
                 return HttpStatusCode.OK;
 	        }

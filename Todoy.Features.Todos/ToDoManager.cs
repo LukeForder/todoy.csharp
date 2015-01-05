@@ -48,11 +48,14 @@ namespace Todoy.Features.Todos
             return await _toDoStore.GetAsync(id);
         }
 
-        public async Task CompleteTodoAsync(Guid id)
-        {
-            ToDo todo = await this.GetAsync(id);
-            if (todo != null)
+        public async Task CompleteTodoAsync(CompleteToDoCommand completeCommand)
+        {  
+            ToDo todo = await this.GetAsync(completeCommand.ToDoId);
+
+            // if the todo exists and the user requesting the completion is the requester
+            if (todo != null && string.Compare(todo.CreatedBy, completeCommand.UserName, true) == 0)
             {
+                // mark it as completed
                 todo.DoneDate = DateTime.UtcNow;
 
                 await _toDoStore.SaveAsync(todo);
