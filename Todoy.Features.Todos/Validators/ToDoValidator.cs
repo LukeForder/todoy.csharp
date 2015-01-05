@@ -13,8 +13,7 @@ namespace Todoy.Features.Todos.Validators
         public ToDoValidator()
         {
             RuleFor(x => x.CreatedDate)
-                .NotEmpty()
-                .LessThanOrEqualTo(DateTime.Now);
+                .NotEmpty();
 
             RuleFor(x => x.CreatedBy)
                 .NotEmpty();
