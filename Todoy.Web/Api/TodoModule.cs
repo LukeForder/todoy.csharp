@@ -24,6 +24,7 @@ namespace Todoy.Web.Api
         public TodoModule(ITodoManager todoManager)
         {
             this.RequiresAuthentication();
+            this.RequiresHttps();
 
             _todoManager = todoManager;
 

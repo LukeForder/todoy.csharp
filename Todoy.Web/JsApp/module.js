@@ -1,7 +1,8 @@
 ﻿angular.module(
     'todoy',
     ['ngRoute', 'validation.match']).
-constant('siteUrl', "http://todoy.azurewebsites.net").
+constant('siteUrl', "https://localhost/Todoy").
+//constant('siteUrl', "http://todoy.azurewebsites.net").
 constant('user', null).
 config([
     '$routeProvider',
@@ -86,6 +87,12 @@ controller(
         '$scope',
         'authenticationService',
         todoy.authentication.controllers.RegistrationController
+    ]).
+directive(
+    'errors',
+    [
+        'siteUrl',
+        todoy.authentication.directives.ErrorsFactory
     ]).
 directive(
     'registrationForm',

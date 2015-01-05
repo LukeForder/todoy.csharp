@@ -1,0 +1,18 @@
+﻿<div data-ng-show="!isValid" class="text-danger">  
+    <div data-ng-repeat="(type, value) in errorMessages">
+        <span data-ng-switch="type">
+            <span data-ng-switch-when="required">
+                {{requiredMessage}}
+            </span>
+            <span data-ng-switch-when="email">
+                 {{emailMessage}}
+            </span>
+            <span data-ng-switch-when="match">
+                {{matchMessage}}
+            </span>
+            <span data-ng-switch-when="pattern">
+                {{patternMessage}}
+            </span>
+        </span>
+    </div>
+</div>

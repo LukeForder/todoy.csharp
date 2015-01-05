@@ -14,8 +14,8 @@
     <RootNamespace>Todoy.Web</RootNamespace>
     <AssemblyName>Todoy.Web</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
+    <UseIISExpress>false</UseIISExpress>
+    <IISExpressSSLPort>44305</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -148,8 +148,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="JsApp\authentication\controllers\AuthenticationController.js" />
     <Content Include="JsApp\authentication\controllers\RegistrationController.js" />
+    <Content Include="JsApp\authentication\directives\Errors.js" />
     <Content Include="JsApp\authentication\directives\RegistrationForm.js" />
     <Content Include="JsApp\authentication\models\RegistrationDetails.js" />
+    <Content Include="JsApp\authentication\partials\errorMessages.html" />
     <Content Include="JsApp\authentication\partials\login.html" />
     <Content Include="JsApp\authentication\partials\registration.html" />
     <Content Include="JsApp\authentication\services\AuthenticationService.js" />
@@ -1116,7 +1118,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>56749</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:56749/</IISUrl>
+          <IISUrl>http://localhost/Todoy</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

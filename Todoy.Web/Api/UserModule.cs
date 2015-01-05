@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Nancy.Authentication.Token;
 using Todoy.Web.Infrastructure;
 using System.Text;
+using Nancy.Security;
 
 namespace Todoy.Web.Api
 {
@@ -25,6 +26,8 @@ namespace Todoy.Web.Api
             ITokenizer tokenizer)
         {
             ILog log = LogManager.GetCurrentClassLogger();
+
+            this.RequiresHttps();
 
             _userManager = userManager;
             _tokenizer = tokenizer;

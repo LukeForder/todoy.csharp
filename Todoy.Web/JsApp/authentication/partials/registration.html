@@ -14,23 +14,40 @@
                             data-ng-model="emailAddress"
                             required    
                             type="email"/>
-                </div>
-                <div class="form-group">
-                    <input class="form-control"
-                            name="password"
-                            type="password"
-                            placeholder="password"
-                            data-ng-model="password"
-                            required />
+                    <div data-errors
+                         data-is-valid="registrationForm.emailAddress.$valid || registrationForm.emailAddress.$pristine"
+                         data-error-messages="registrationForm.emailAddress.$error"
+                         data-required-message="Your email address is required." 
+                         data-email-message="You need to enter a valid email address."/>
                 </div>
                 <div class="form-group">
                     <input class="form-control"
                            name="password"
                            type="password"
+                           placeholder="password"
+                           data-ng-model="password"
+                           pattern="^(?=.*[A-Z])(?=.*[^\w])(?=.*[0-9])(?=.*[a-z]).{10,128}$"
+                           required />
+                    <div data-errors
+                         data-is-valid="registrationForm.password.$valid || registrationForm.password.$pristine"
+                         data-error-messages="registrationForm.password.$error" 
+                         data-required-message="A password is required"
+                         data-pattern-message="Your password must be at least 10 characters long, with a upper case letter, a lower case letter, a digit and a punctuation or space character."/>
+                </div>
+                <div class="form-group">
+                    <input class="form-control"
+                           name="passwordConfirmation"
+                           type="password"
                            placeholder="confirm password"
                            data-ng-model="passwordConfirmation"
                            data-match="password"
                            required />
+                    <div data-errors
+                         data-is-valid="registrationForm.passwordConfirmation.$valid ||registrationForm.passwordConfirmation.$pristine"
+                         data-error-messages="registrationForm.passwordConfirmation.$error"
+                         data-required-message="You need to confirm your password."
+                         data-match-message="The password confirmation must match your password."
+                          />
                 </div>
                 <div class="form-group">
                     <button class="btn btn-primary"

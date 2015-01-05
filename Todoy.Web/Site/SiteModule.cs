@@ -10,6 +10,8 @@ using SquishIt.Less;
 using System.IO;
 using Todoy.Features.Users;
 
+using Nancy.Security;
+
 namespace Todoy.Web.Site
 {
     public class SiteModule : NancyModule
@@ -18,7 +20,10 @@ namespace Todoy.Web.Site
 
         public SiteModule(IUserManager userManager)
         {
+            this.RequiresHttps();
+
             _userManager = userManager;
+
 
             Get["/"] = (args) =>
             {
