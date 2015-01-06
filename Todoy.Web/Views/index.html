@@ -13,5 +13,8 @@
     </div>
     <script src="@Path['~/js/all']"></script>
     <script src="@Path['~/js/app']"></script>
+    <script>
+        angular.module('todoy').constant('siteUrl', "@Model.SitePath");
+    </script>
 </body>
 </html>

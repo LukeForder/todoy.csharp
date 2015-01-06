@@ -215,7 +215,11 @@
     <Content Include="Scripts\angular-aria.min.js.map" />
     <Content Include="Scripts\angular-animate.min.js.map" />
     <Content Include="Scripts\angular.min.js.map" />
+    <None Include="Properties\PublishProfiles\todoy - FTP %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\todoy - FTP %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\todoy - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\todoy - Web Deploy %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\todoy - Web Deploy %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\todoy - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-dj.js" />
@@ -1053,6 +1057,7 @@
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>

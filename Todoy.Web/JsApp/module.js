@@ -1,8 +1,6 @@
 ﻿angular.module(
     'todoy',
     ['ngRoute', 'validation.match', 'ngCookies', 'ngProgressLite']).
-constant('siteUrl', "https://localhost/Todoy").
-//constant('siteUrl', "http://todoy.azurewebsites.net").
 constant('user', null).
 config([
     '$routeProvider',
