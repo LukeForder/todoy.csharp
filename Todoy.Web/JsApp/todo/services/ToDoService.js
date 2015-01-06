@@ -29,8 +29,6 @@ todoy.toDo.services = todoy.toDo.services || {};
 
             var model = asModel(dto);
 
-            console.log(model);
-
             task.resolve(model);
         }
 

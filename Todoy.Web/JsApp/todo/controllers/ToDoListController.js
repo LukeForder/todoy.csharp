@@ -35,7 +35,6 @@ todoy.toDo.controllers = todoy.toDo.controllers || {};
         var self = this;
 
         function onFetchedAll(dto) {
-            console.log(dto);
             self.toDoList = dto;
         }
 
@@ -74,8 +73,6 @@ todoy.toDo.controllers = todoy.toDo.controllers || {};
         function onErrorCompleting() {
             // TODO: show a message
         }
-
-        console.log(toDo);
 
         self.
             toDoService.

@@ -38,7 +38,6 @@ run([
 
         // register listener to watch route changes
         rootScopeService.$on("$routeChangeStart", function (event, next, current) {
-            console.log(identityService);
             if (identityService.authorizationToken == null) {
                 // no logged user, we should be going to #login
                 if (next.templateUrl == "partials/login.html") {

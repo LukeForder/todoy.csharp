@@ -39,7 +39,6 @@ todoy.authentication.controllers = todoy.authentication.controllers || {};
 
         var registrationDetails = new todoy.authentication.models.RegistrationDetails(self.userName, self.password, self.passwordConfirmation);
 
-        console.log(registrationDetails);
 
         self.authenticationService.registerAsync(registrationDetails).
         then(onRegistered, onFailedToRegister);

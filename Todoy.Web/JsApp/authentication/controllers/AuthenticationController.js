@@ -17,7 +17,6 @@ todoy.authentication.controllers = todoy.authentication.controllers || {};
         this._scope.$on('user-registered', this.onUserRegistered.bind(this));
         this._scope.$on('user-registeration-failed', this.onUserRegistrationFailed.bind(this))
 
-        console.log(this._scope);
     };
 
     AuthenticationController.prototype.onUserRegistrationFailed = function onUserRegistrationFailed(event, errors) {
@@ -36,7 +35,6 @@ todoy.authentication.controllers = todoy.authentication.controllers || {};
     AuthenticationController.prototype.attemptSignIn = function attemptSignIn() {
         var self = this;
 
-        console.log('attempt sign in');
 
         function onSignedIn() {
             self.locationService.path("/");

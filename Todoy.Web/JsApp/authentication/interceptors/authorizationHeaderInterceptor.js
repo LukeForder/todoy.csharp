@@ -7,7 +7,6 @@ todoy.authentication.interceptors = todoy.authentication.interceptors || {};
 
     function AuthorizationHeaderInterceptor(identityService) {
 
-        console.log("identityService: %o", identityService);
         // HACK
         this.request = function (config) {
 
