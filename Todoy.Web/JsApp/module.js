@@ -1,6 +1,6 @@
 ﻿angular.module(
     'todoy',
-    ['ngRoute', 'validation.match', 'ngCookies']).
+    ['ngRoute', 'validation.match', 'ngCookies', 'ngProgressLite']).
 constant('siteUrl', "https://localhost/Todoy").
 //constant('siteUrl', "http://todoy.azurewebsites.net").
 constant('user', null).
@@ -121,10 +121,18 @@ factory(
             return new todoy.authentication.interceptors.AuthorizationHeaderInterceptor(identityService);
         }
     ]).
+service(
+    'httpRequestProgressInterceptor',
+    [
+        '$q',
+        'ngProgressLite',
+        todoy.common.interceptors.HttpRequestProgressInterceptor
+    ]).
 config([
     '$httpProvider',
     function ($httpProvider) {
         $httpProvider.interceptors.push('authorizationHeaderInterceptor');
+        $httpProvider.interceptors.push('httpRequestProgressInterceptor');
     }
 ]);
 

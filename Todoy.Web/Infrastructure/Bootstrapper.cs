@@ -136,6 +136,7 @@ namespace Todoy.Web.Infrastructure
                 .Add("~/Scripts/angular-input-match.js")
                 .Add("~/Scripts/angular-local-storage.js")
                 .Add("~/Scripts/angular-cookies.js")
+                .Add("~/Scripts/ngprogresslite.js")
                 .Add("~/Scripts/moment.js")
                 .WithMinifier<SquishIt.Framework.Minifiers.JavaScript.MsMinifier>()
                 .ForceRelease()
@@ -144,6 +145,7 @@ namespace Todoy.Web.Infrastructure
             Bundle
                 .Css()
                 .Add("~/Content/font-awesome.css")
+                .Add("~/Content/ngprogresslite.css")
                 .Add("~/Less/bootstrap.less")
                 .ProcessImports()
                 .Add("~/Less/bootswatch.less")
@@ -156,6 +158,7 @@ namespace Todoy.Web.Infrastructure
                 .JavaScript()
                 .AddDirectory("~/JsApp/authentication")
                 .AddDirectory("~/JsApp/todo")
+                .AddDirectory("~/JsApp/common")
                 .Add("~/JsApp/module.js")
                 .ForceRelease()
                 .AsCached("app", "~/js/app");
