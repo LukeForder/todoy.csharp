@@ -5,14 +5,10 @@ todoy.toDo.services = todoy.toDo.services || {};
 
 (function addToDoServiceToNamespace(ns) {
 
-    var currentUser = null;
-
     function ToDoService(httpService, qService, siteUrl, authenticationService) {
         this.httpService = httpService;
         this.qService = qService;
         this.siteUrl = siteUrl;
-
-        currentUser = authenticationService.getUser();
     }
 
     function asModel(dto) {
@@ -51,7 +47,7 @@ todoy.toDo.services = todoy.toDo.services || {};
             Details: toDo.details
         };
 
-        self.httpService.post(self.siteUrl + '/api/todo', toDoDto, { headers: { 'Authorization': "Token " + currentUser.token }}).
+        self.httpService.post(self.siteUrl + '/api/todo', toDoDto).
         success(onAddedToDo).
         error(onErrorAddingToDo);
 
@@ -77,7 +73,7 @@ todoy.toDo.services = todoy.toDo.services || {};
 
         var task = self.qService.defer();
 
-        self.httpService.get(self.siteUrl + '/api/todo', { headers: { 'Authorization': "Token " + currentUser.token } }).
+        self.httpService.get(self.siteUrl + '/api/todo').
            success(onGotAll).
            error(onFailedToGetAll);
 
@@ -102,12 +98,7 @@ todoy.toDo.services = todoy.toDo.services || {};
 
         self.httpService.patch(
             url,
-            null, // no data to send
-            {
-                headers: {
-                    'Authorization': "Token " + currentUser.token
-                }
-            }).
+            null).
         success(onToDoMarkedAsComplete).
         error(onErrorMarkingToDoAsComplete);
 

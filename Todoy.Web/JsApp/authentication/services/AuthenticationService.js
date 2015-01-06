@@ -5,30 +5,18 @@ todoy.authentication.services = todoy.authentication.services || {};
 
 (function addAuthenticationServiceToNamespace(ns) {
 
-    var currentUser = null;
-
-    function AuthenticationService(httpService, qService, siteUrl) {
+    function AuthenticationService(httpService, qService, siteUrl, identityService) {
         this.httpService = httpService;
         this.qService = qService;
         this.siteUrl = siteUrl;
+        this.identityService = identityService;
     };
 
-    AuthenticationService.prototype.getUser = function getUser() {
-        return currentUser;
-    };
-
+    
     AuthenticationService.prototype.validateCredentialsAsync = function validateCredentialsAsync(userName, password) {
         var self = this;
         function onLoggedIn(authenticationToken) {
-            currentUser = {};
-            // no mutablity for this property
-            Object.defineProperty(
-                currentUser,
-                'token',
-                {
-                    value: authenticationToken
-                });
-
+            self.identityService.authorizationToken = authenticationToken;
             task.resolve();
         }
 

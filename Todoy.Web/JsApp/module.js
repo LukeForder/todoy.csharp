@@ -1,6 +1,6 @@
 ﻿angular.module(
     'todoy',
-    ['ngRoute', 'validation.match']).
+    ['ngRoute', 'validation.match', 'ngCookies']).
 constant('siteUrl', "https://localhost/Todoy").
 //constant('siteUrl', "http://todoy.azurewebsites.net").
 constant('user', null).
@@ -33,12 +33,13 @@ config([
 run([
     '$rootScope',
     '$location',
-    'authenticationService',
-    function (rootScopeService, locationService, authenticationService) {
+    'identityService',
+    function (rootScopeService, locationService, identityService) {
 
         // register listener to watch route changes
         rootScopeService.$on("$routeChangeStart", function (event, next, current) {
-            if (authenticationService.getUser() == null) {
+            console.log(identityService);
+            if (identityService.authorizationToken == null) {
                 // no logged user, we should be going to #login
                 if (next.templateUrl == "partials/login.html") {
                     // already going to #login, no redirect needed
@@ -65,7 +66,14 @@ service(
         '$http',
         '$q',
         'siteUrl',
+        'identityService',
          todoy.authentication.services.AuthenticationService
+    ]).
+service(
+    'identityService',
+    [
+        '$cookieStore',
+        todoy.authentication.services.IdentityService
     ]).
 controller(
     'authenticationController',
@@ -104,5 +112,19 @@ filter(
     'readableDate',
     function readableDateProvider() {
         return todoy.toDo.filters.HumanDateFilter;
-    });
+    }).
+factory(
+    'authorizationHeaderInterceptor',
+    [
+        'identityService',
+        function (identityService) {
+            return new todoy.authentication.interceptors.AuthorizationHeaderInterceptor(identityService);
+        }
+    ]).
+config([
+    '$httpProvider',
+    function ($httpProvider) {
+        $httpProvider.interceptors.push('authorizationHeaderInterceptor');
+    }
+]);
 

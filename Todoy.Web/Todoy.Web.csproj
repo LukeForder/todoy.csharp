@@ -150,11 +150,13 @@
     <Content Include="JsApp\authentication\controllers\RegistrationController.js" />
     <Content Include="JsApp\authentication\directives\Errors.js" />
     <Content Include="JsApp\authentication\directives\RegistrationForm.js" />
+    <Content Include="JsApp\authentication\interceptors\AuthorizationHeaderInterceptor.js" />
     <Content Include="JsApp\authentication\models\RegistrationDetails.js" />
     <Content Include="JsApp\authentication\partials\errorMessages.html" />
     <Content Include="JsApp\authentication\partials\login.html" />
     <Content Include="JsApp\authentication\partials\registration.html" />
     <Content Include="JsApp\authentication\services\AuthenticationService.js" />
+    <Content Include="JsApp\authentication\services\IdentityService.js" />
     <Content Include="JsApp\module.js" />
     <Content Include="JsApp\todo\controllers\ToDoListController.js" />
     <Content Include="JsApp\todo\filters\HumanDateFilter.js" />
@@ -173,6 +175,7 @@
     <Content Include="Scripts\angular-input-match.min.js" />
     <Content Include="Scripts\angular-loader.js" />
     <Content Include="Scripts\angular-loader.min.js" />
+    <Content Include="Scripts\angular-local-storage.js" />
     <Content Include="Scripts\angular-messages.js" />
     <Content Include="Scripts\angular-messages.min.js" />
     <Content Include="Scripts\angular-mocks.js" />
