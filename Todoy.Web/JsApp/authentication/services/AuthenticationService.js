@@ -21,6 +21,7 @@ todoy.authentication.services = todoy.authentication.services || {};
         }
 
         function onErrorLoggingIn(reason, status) {
+            console.log(reason, status);
             if (status == 401) {
                 task.reject(['Invalid user name and password combination.']);
             }

@@ -138,7 +138,7 @@ namespace Todoy.Web.Infrastructure
                 .Add("~/Scripts/angular-cookies.js")
                 .Add("~/Scripts/ngprogresslite.js")
                 .Add("~/Scripts/moment.js")
-                .WithMinifier<SquishIt.Framework.Minifiers.JavaScript.MsMinifier>()
+                //.WithMinifier<SquishIt.Framework.Minifiers.JavaScript.MsMinifier>()
                 .ForceRelease()
                 .AsCached("all", "~/js/all");
 

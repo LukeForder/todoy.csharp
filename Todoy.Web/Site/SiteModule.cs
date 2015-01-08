@@ -27,7 +27,7 @@ namespace Todoy.Web.Site
 
             Get["/"] = (args) =>
             {
-                return View["index.html", new { SitePath = Request.Url.SiteBase }];
+                return View["index.html", new { SitePath = Request.Url.BasePath }];
             };
 
             Get["js/{name}", true] =

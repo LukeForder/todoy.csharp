@@ -13,7 +13,7 @@ todoy.common.interceptors = todoy.common.interceptors || {};
 
         this.requestError = function (rejection) {
             progressBar.done();
-            qService.reject(rejection);
+            return qService.reject(rejection);
         };
 
         this.response = function (response) {
@@ -23,7 +23,7 @@ todoy.common.interceptors = todoy.common.interceptors || {};
 
         this.responseError = function (rejection) {
             progressBar.done();
-            qService.reject(rejection);
+            return  qService.reject(rejection);
         };
     }
 
