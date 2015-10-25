@@ -124,6 +124,7 @@ publish/
 *.[Pp]ublish.xml
 *.azurePubxml
 *.Release.config
+*.pubxml
 
 # NuGet Packages Directory
 packages/
